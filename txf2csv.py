@@ -5,17 +5,37 @@ with open("data.txf") as fin:
     with open(f"{company}.csv", "w") as fout:
         # write the header
         data = [
-            "Description", "Date Acquired", "Date Sold",
-            "Cost  or Other basis", "Sales Proceeds"
+            "Reporting Category", "Long/Short", "Description", "Date Acquired", "Date Sold",
+            "Cost or Other basis", "Sales Proceeds"
         ]
         fout.write(",".join(data) + "\n")
         # this is a new line of record
         while fin.readline().strip() == "^":
             data = []
-            for i in range(4):
+            fin.readline() # skip a unknown column
+            # 8949 code
+            code = fin.readline().strip()
+            if len(code) == 0:
+                break
+            if code in ["N321", "N323"]:
+                data.append("A")
+            elif code in ["N711", "N713"]:
+                data.append("B")
+            elif code in ["N712", "N714"]:
+                data.append("C")
+            else:
+                data.append("unknown")
+            # short term or long term
+            if code in ["N321", "N682", "N711", "N712"]:
+                data.append("short")
+            elif code in ["N323", "N713", "N714"]:
+                data.append("long")
+            else:
+                data.append("unknown")
+            for i in range(2):
                 fin.readline()  # skip unknown columns
             for i in range(5):
                 data.append(fin.readline().strip()[1:])
-            assert (fin.readline().strip() == "$")
+            fin.readline().strip() # might be a sale wash indicator
             # export to CSV
             fout.write(",".join(data) + "\n")
