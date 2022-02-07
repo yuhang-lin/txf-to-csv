@@ -17,12 +17,18 @@ with open("data.txf") as fin:
             code = fin.readline().strip()
             if len(code) == 0:
                 break
-            if code in ["N321", "N323"]:
+            if code == "N321":
                 data.append("A")
-            elif code in ["N711", "N713"]:
+            elif code == "N711":
                 data.append("B")
-            elif code in ["N712", "N714"]:
+            elif code == "N712":
                 data.append("C")
+            elif code == "N323":
+                data.append("D")
+            elif code == "N713":
+                data.append("E")
+            elif code == "N714":
+                data.append("F")
             else:
                 data.append("unknown")
             # short term or long term
