@@ -18,17 +18,17 @@ with open("data.txf") as fin:
             if len(code) == 0:
                 break
             if code == "N321":
-                data.append("A")
+                data.append("A") # Short term: Received a Form 1099-B showing basis was reported to the IRS
             elif code == "N711":
-                data.append("B")
+                data.append("B") # Short term: Received a Form 1099-B showing basis was NOT reported to the IRS
             elif code == "N712":
-                data.append("C")
+                data.append("C") # Short term: Did not receive a Form 1099-B
             elif code == "N323":
-                data.append("D")
+                data.append("D") # Long term: Received a Form 1099-B showing basis was reported to the IRS
             elif code == "N713":
-                data.append("E")
+                data.append("E") # Long term: Received a Form 1099-B showing basis was NOT reported to the IRS
             elif code == "N714":
-                data.append("F")
+                data.append("F") # Long term: Did not receive a Form 1099-B
             else:
                 data.append("unknown")
             # short term or long term
